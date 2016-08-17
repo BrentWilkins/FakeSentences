@@ -1,9 +1,8 @@
-﻿using System;
+﻿using FakeWords.Utilities;
+using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FakeWords
 {
@@ -11,32 +10,42 @@ namespace FakeWords
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Enter name of text file to read");
-            string fileName = Console.ReadLine();
-            Console.WriteLine($"You entered {fileName}, reading that file");
+            var startingWords = new RootWord("fake");
 
-            try
+            var filename = PromptUserForFilename();
+            var fileContents = FileIoUtilities.ReadTextFile(filename);
+
+            if (string.IsNullOrEmpty(fileContents))
             {
-                using (StreamReader reader = File.OpenText(fileName))
-                {
-                    string text = reader.ReadToEnd();
-
-                    Console.WriteLine("Whole file was read!");
-                    // Do stuff with the text here
-                }
+                Console.WriteLine("Didn't read any training data. Cannot generate words.");
+                return;
             }
-            catch (OutOfMemoryException ex)    // We might try and read a file that is too large
+            else
             {
-                Console.WriteLine($"Not enough memory to read all of {fileName}");
-                Console.WriteLine(ex.Message);
-                //Parallel.For(0, 12, x =>
+                // TODO: These might have made good unit tests
+                //startingWords.TrainOnData(startingWords, "'Shan't,' said the cook.");
+                //startingWords.TrainOnData(startingWords, "'Yes, please do!' pleaded Alice");
+
+                startingWords.TrainOnData(startingWords, fileContents);
+                //foreach (KeyValuePair<string, Word> kvp in startingWords.Children)
                 //{
-                //    // Do stuff
-                //});
+                //    Console.WriteLine($"Key = {kvp.Key}, Value = {kvp.Value.Count}");
+                //}
             }
 
-            MarkovChain chain = new MarkovChain();
-            chain.AddTransition(null, null);
+            Console.WriteLine(startingWords.GenerateSentence(5));
+        }
+
+        /// <summary>
+        /// Prompts user to enter the [path]name of a text file.
+        /// </summary>
+        /// <returns>A string which is hopefully the name of a text file.</returns>
+        private static string PromptUserForFilename()
+        {
+            Console.WriteLine("Enter name of text file to read");
+            string filename = Console.ReadLine();
+            Console.WriteLine($"You entered '{filename}', attempting read of that file");
+            return filename;
         }
     }
 }

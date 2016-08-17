@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FakeWords", "FakeWords\FakeWords.csproj", "{CF320BEF-2652-4350-B016-589BC11EB5A7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FakeSentences", "FakeWords\FakeSentences.csproj", "{CF320BEF-2652-4350-B016-589BC11EB5A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FakeWords.Tests", "FakeWords.Tests\FakeWords.Tests.csproj", "{013D8E29-5EA1-4C27-8EB5-4FC595AAF410}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FakeSentences.Tests", "FakeWords.Tests\FakeSentences.Tests.csproj", "{013D8E29-5EA1-4C27-8EB5-4FC595AAF410}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
