@@ -1,0 +1,23 @@
+digraph G {
+  /* size = "4,4"; */
+  rankdir=LR;
+  node0 [label = "<f0> This | <f1> Count: 3", shape=record];
+  node1 [label = "<f0> is | <f1> Count: 3", shape=record];
+  node2 [label = "<f0> a | <f1> Count: 3",height=0.5, shape=record];
+  node3 [label = "<f0> sentence | <f1> Count: 2",height=0.5, shape=record];
+  node4 [label = "<f0> word | <f1> Count: 1",height=0.5, shape=record];
+  node5 [label = "<f0> too | <f1> Count: 1",height=0.5, shape=record];
+
+  RootWord -> node0:f0;
+  node0:f0 -> node1:f0;
+  node1:f0 -> node2:f0;
+  node2:f0 -> node3:f0;
+  node2:f0 -> node4:f0;
+  node4:f0 -> node5:f0;
+}
+
+/*
+This is a sentence.
+This is a sentence too.
+This is a word.
+*/
