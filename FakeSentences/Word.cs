@@ -1,11 +1,4 @@
-﻿using FakeWords.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FakeWords
+﻿namespace FakeSentences
 {
     /// <summary>
     /// Graph node for words. Stores info about a word, and links to children nodes.
@@ -13,7 +6,7 @@ namespace FakeWords
     public class Word
     {
         public enum Leaf { None = 0, IsNotLeaf, IsLeaf, IsMaybeLeaf }
-        public UInt32 Count { get; set; }
+        public int Count { get; set; }
         public double Probability { get; set; }
         public string Text { get; set; }
         public System.Collections.Concurrent.ConcurrentDictionary<string, Word> Children { get; set; }
@@ -23,12 +16,12 @@ namespace FakeWords
         /// Constructor.
         /// </summary>
         /// <param name="word">String representation of the word.</param>
-        public Word(string word)
+        public Word(string word, Leaf isLeaf = Leaf.IsLeaf)
         {
             Count = 1;
             Probability = 0;
             Text = word;
-            IsLeaf = Leaf.IsLeaf;
+            IsLeaf = isLeaf;
             Children = new System.Collections.Concurrent.ConcurrentDictionary<string, Word>();
         }
 
@@ -45,38 +38,42 @@ namespace FakeWords
             }
 
             return Children.AddOrUpdate(child.Text, child,
-                (key, value) =>
+                (key, newValue) =>
                 {
                     // We get here if key already exists. Need to update that item,
-                    value.Count++;
+                    newValue.Count++;
+                    // Get a reference to the current child with same key
+                    Word existing;
+                    Children.TryGetValue(newValue.Text, out existing);
+
                     // The leaf status of the node depends on the current status and the new
-                    if (value.IsLeaf.Equals(Leaf.IsLeaf))
+                    if (newValue.IsLeaf.Equals(Leaf.IsLeaf))
                     {
-                        if (IsLeaf.Equals(Leaf.IsLeaf))
+                        if (existing.IsLeaf.Equals(Leaf.IsLeaf))
                         {
-                            value.IsLeaf = Leaf.IsLeaf;
+                            newValue.IsLeaf = Leaf.IsLeaf;
                         }
                         else
                         {
-                            value.IsLeaf = Leaf.IsMaybeLeaf;
+                            newValue.IsLeaf = Leaf.IsMaybeLeaf;
                         }
                     }
-                    else if (value.IsLeaf.Equals(Leaf.IsNotLeaf))
+                    else if (newValue.IsLeaf.Equals(Leaf.IsNotLeaf))
                     {
-                        if (IsLeaf.Equals(Leaf.IsNotLeaf))
+                        if (existing.IsLeaf.Equals(Leaf.IsNotLeaf))
                         {
-                            value.IsLeaf = Leaf.IsNotLeaf;
+                            newValue.IsLeaf = Leaf.IsNotLeaf;
                         }
                         else
                         {
-                            value.IsLeaf = Leaf.IsMaybeLeaf;
+                            newValue.IsLeaf = Leaf.IsMaybeLeaf;
                         }
                     }
                     else
                     {
-                        value.IsLeaf = Leaf.IsMaybeLeaf;
+                        newValue.IsLeaf = Leaf.IsMaybeLeaf;
                     }
-                    return value;
+                    return newValue;
                 });
         }
     }

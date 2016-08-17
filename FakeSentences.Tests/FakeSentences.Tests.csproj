@@ -54,7 +54,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FakeWords\FakeSentences.csproj">
+    <ProjectReference Include="..\FakeSentences\FakeSentences.csproj">
       <Project>{cf320bef-2652-4350-b016-589bc11eb5a7}</Project>
       <Name>FakeSentences</Name>
     </ProjectReference>

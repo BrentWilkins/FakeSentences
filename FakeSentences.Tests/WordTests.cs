@@ -1,15 +1,16 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using FakeWords;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using FakeSentences;
 
-namespace FakeWords.Tests
+namespace FakeSentences.Tests
 {
     [TestClass]
     public class WordTests
     {
         /// <summary>
         /// Adding a a child word with the same text twice should only increment the count,
-        /// not add a second child. The ability of a word to be a leaf node is as follows:
+        /// not add a second child.
+        /// </summary>
+        /// The ability of a word to be a leaf node is as follows:
         /// First word  | Second word | Combined
         /// ------------------------------------
         /// IsLeaf      | IsLeaf      | IsLeaf
@@ -21,7 +22,6 @@ namespace FakeWords.Tests
         /// IsLeaf      | IsMaybeLeaf | IsMaybeLeaf
         /// IsNotLeaf   | IsMaybeLeaf | IsMaybeLeaf
         /// IsMaybeLeaf | IsMaybeLeaf | IsMaybeLeaf
-        /// </summary>
         [TestMethod]
         public void AddSameWordTwiceBothLeaves()
         {
