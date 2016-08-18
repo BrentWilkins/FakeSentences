@@ -5,10 +5,10 @@
  -->
 <!-- Title: G Pages: 1 -->
 <svg
- viewBox="0.00 0.00 526.10 130.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 126)">
+ viewBox="0.00 0.00 526.10 98.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 94)">
 <title>G</title>
-<polygon fill="white" stroke="none" points="-4,4 -4,-126 522.099,-126 522.099,4 -4,4"/>
+<polygon fill="white" stroke="none" points="-4,4 -4,-94 522.099,-94 522.099,4 -4,4"/>
 <!-- This -->
 <g id="node1" class="node"><title>This</title>
 <ellipse fill="none" stroke="black" cx="27" cy="-46" rx="27" ry="18"/>
@@ -58,19 +58,13 @@
 <polygon fill="black" stroke="black" points="333.893,-29.3949 342.896,-23.8096 332.375,-22.5614 333.893,-29.3949"/>
 <text text-anchor="middle" x="299.25" y="-38.8" font-family="Times,serif" font-size="14.00">0.33</text>
 </g>
-<!-- sentence&#45;&gt;sentence -->
-<g id="edge6" class="edge"><title>sentence&#45;&gt;sentence</title>
-<path fill="none" stroke="black" d="M358.267,-89.4099C356.067,-99.0879 359.995,-108 370.049,-108 376.334,-108 380.224,-104.519 381.722,-99.5449"/>
-<polygon fill="black" stroke="black" points="385.223,-99.4475 381.832,-89.4099 378.223,-99.3711 385.223,-99.4475"/>
-<text text-anchor="middle" x="370.049" y="-110.8" font-family="Times,serif" font-size="14.00">0.5</text>
-</g>
 <!-- too2 -->
 <g id="node7" class="node"><title>too2</title>
 <ellipse fill="none" stroke="black" cx="491.099" cy="-72" rx="27" ry="18"/>
 <text text-anchor="middle" x="491.099" y="-67.8" font-family="Times,serif" font-size="14.00">too</text>
 </g>
 <!-- sentence&#45;&gt;too2 -->
-<g id="edge7" class="edge"><title>sentence&#45;&gt;too2</title>
+<g id="edge6" class="edge"><title>sentence&#45;&gt;too2</title>
 <path fill="none" stroke="black" d="M410.691,-72C424.461,-72 439.835,-72 453.36,-72"/>
 <polygon fill="black" stroke="black" points="453.745,-75.5001 463.745,-72 453.745,-68.5001 453.745,-75.5001"/>
 <text text-anchor="middle" x="437.349" y="-74.8" font-family="Times,serif" font-size="14.00">0.5</text>

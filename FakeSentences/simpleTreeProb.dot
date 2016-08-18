@@ -9,7 +9,6 @@ digraph G {
   too2 [label = "too"];
 
   word -> too1 [ label = "1.0" ];
-  sentence -> sentence [ label = "0.5" ];
   sentence -> too2 [ label = "0.5" ];
   
 }
