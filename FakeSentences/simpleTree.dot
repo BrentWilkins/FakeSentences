@@ -7,6 +7,7 @@ digraph G {
   node3 [label = "<f0> sentence | <f1> Count: 2",height=0.5, shape=record];
   node4 [label = "<f0> word | <f1> Count: 1",height=0.5, shape=record];
   node5 [label = "<f0> too | <f1> Count: 1",height=0.5, shape=record];
+  node6 [label = "<f0> too | <f1> Count: 1",height=0.5, shape=record];
 
   RootWord -> node0:f0;
   node0:f0 -> node1:f0;
@@ -14,10 +15,11 @@ digraph G {
   node2:f0 -> node3:f0;
   node2:f0 -> node4:f0;
   node4:f0 -> node5:f0;
+  node3:f0 -> node6:f0;
 }
 
 /*
 This is a sentence.
 This is a sentence too.
-This is a word.
+This is a word too.
 */
