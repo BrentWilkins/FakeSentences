@@ -29,7 +29,7 @@
         /// Adds a link to the next word found in a sentence.
         /// </summary>
         /// <param name="child">Word to add the link to.</param>
-        public Word AddChild(ref Word child)
+        public Word AddChild(Word child)
         {
             // Word nodes that were leaves are no longer leaves with a child
             if (IsLeaf.Equals(Leaf.IsLeaf))
@@ -38,42 +38,40 @@
             }
 
             return Children.AddOrUpdate(child.Text, child,
-                (key, newValue) =>
+                (key, existing) =>
                 {
-                    // We get here if key already exists. Need to update that item,
-                    newValue.Count++;
-                    // Get a reference to the current child with same key
-                    Word existing;
-                    Children.TryGetValue(newValue.Text, out existing);
+                    // We get here if key already exists. Need to update that item.
+                    // existing = current value in the dictionary; child = incoming value.
+                    existing.Count++;
 
                     // The leaf status of the node depends on the current status and the new
-                    if (newValue.IsLeaf.Equals(Leaf.IsLeaf))
+                    if (child.IsLeaf.Equals(Leaf.IsLeaf))
                     {
                         if (existing.IsLeaf.Equals(Leaf.IsLeaf))
                         {
-                            newValue.IsLeaf = Leaf.IsLeaf;
+                            existing.IsLeaf = Leaf.IsLeaf;
                         }
                         else
                         {
-                            newValue.IsLeaf = Leaf.IsMaybeLeaf;
+                            existing.IsLeaf = Leaf.IsMaybeLeaf;
                         }
                     }
-                    else if (newValue.IsLeaf.Equals(Leaf.IsNotLeaf))
+                    else if (child.IsLeaf.Equals(Leaf.IsNotLeaf))
                     {
                         if (existing.IsLeaf.Equals(Leaf.IsNotLeaf))
                         {
-                            newValue.IsLeaf = Leaf.IsNotLeaf;
+                            existing.IsLeaf = Leaf.IsNotLeaf;
                         }
                         else
                         {
-                            newValue.IsLeaf = Leaf.IsMaybeLeaf;
+                            existing.IsLeaf = Leaf.IsMaybeLeaf;
                         }
                     }
                     else
                     {
-                        newValue.IsLeaf = Leaf.IsMaybeLeaf;
+                        existing.IsLeaf = Leaf.IsMaybeLeaf;
                     }
-                    return newValue;
+                    return existing;
                 });
         }
     }

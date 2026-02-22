@@ -26,7 +26,7 @@ namespace FakeSentences
                 string cleanSentence = SentenceUtils.CleanSentence(sentence);
                 string[] words = SentenceUtils.SplitSentence(cleanSentence);
                 // Store previous word so we can find it to add a child
-                Word previousWord = null;
+                Word? previousWord = null;
                 foreach (string word in words)
                 {
                     // Some sample text generated "'", which isn't a word
@@ -35,26 +35,19 @@ namespace FakeSentences
                         continue;
                     }
                     string lowerWord = SentenceUtils.CleanWord(word).ToLower();
-                    Word currentWord;
-                    if (startingWords.Children.ContainsKey(lowerWord))   // TODO: BUG: This likely captures repeated words
-                    {
-                        currentWord = new Word(string.Empty);
-                        startingWords.Children.TryGetValue(lowerWord, out currentWord);
-                    }
-                    else
-                    {
+                    // TODO: BUG: TryGetValue here likely captures repeated words
+                    if (!startingWords.Children.TryGetValue(lowerWord, out Word? currentWord))
                         currentWord = new Word(lowerWord);
-                    }
 
                     // TODO: This test is likely invalid in cases of repeated words in a sentence
                     if (words.First() == word)
                     {
                         // This is a valid word to start a sentence with
-                        previousWord = startingWords.AddChild(ref currentWord);
+                        previousWord = startingWords.AddChild(currentWord!);
                     }
                     else
                     {
-                        previousWord = previousWord?.AddChild(ref currentWord);
+                        previousWord = previousWord?.AddChild(currentWord!);
                     }
                 }
             });
@@ -87,11 +80,14 @@ namespace FakeSentences
                 Word word = GetRandomElement(sortedArray);
                 // Add first word with first char uppercased.
                 returnString += word.Text.First().ToString().ToUpper() + word.Text.Substring(1);
-                // TODO: Doesn't handle cases where words sometimes end sentences
                 while (word.Children.Count != 0)
                 {
                     word = GetRandomElement(word.Children.OrderByDescending(sw => sw.Value.Count).ToArray());
-                    returnString += " " + word.Text;
+                    string w = (word.Text == "i" || word.Text.StartsWith("i'")) ? "I" + word.Text[1..] : word.Text;
+                    returnString += " " + w;
+                    // IsMaybeLeaf nodes sometimes ended sentences in training — stop here probabilistically
+                    if (word.IsLeaf == Word.Leaf.IsMaybeLeaf && _randomGenerator.NextDouble() < 0.5)
+                        break;
                 }
                 // Found a leaf, add a period to end sentence.
                 // TODO: Add more punctuation options and remove extra space

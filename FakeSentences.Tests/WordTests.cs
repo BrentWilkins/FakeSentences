@@ -29,8 +29,8 @@ namespace FakeSentences.Tests
             Word testWord  = new Word("word", Word.Leaf.IsLeaf);
             Word testWord2 = new Word("word", Word.Leaf.IsLeaf);
 
-            root.AddChild(ref testWord);
-            root.AddChild(ref testWord2);
+            root.AddChild(testWord);
+            root.AddChild(testWord2);
 
             // Only added children to the root, so count must be one
             Assert.AreEqual(root.Count, 1);
@@ -53,8 +53,8 @@ namespace FakeSentences.Tests
             Word testWord = new Word("word", Word.Leaf.IsLeaf);
             Word testWord2 = new Word("word", Word.Leaf.IsNotLeaf);
 
-            root.AddChild(ref testWord);
-            root.AddChild(ref testWord2);
+            root.AddChild(testWord);
+            root.AddChild(testWord2);
 
             // Only added children to the root, so count must be one
             Assert.AreEqual(root.Count, 1);
