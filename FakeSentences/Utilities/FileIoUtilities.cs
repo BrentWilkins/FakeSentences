@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FakeSentences.Utilities
+﻿namespace FakeSentences.Utilities
 {
     public static class FileIoUtilities
     {
@@ -14,9 +7,9 @@ namespace FakeSentences.Utilities
         /// </summary>
         /// <param name="filename">Name including path of file to read.</param>
         /// <returns>Returns the text read, or null on failure or empty file.</returns>
-        public static string ReadTextFile(string filename)
+        public static string? ReadTextFile(string filename)
         {
-            string retVal = null;
+            string? retVal = null;
             try
             {
                 if (File.Exists(filename))

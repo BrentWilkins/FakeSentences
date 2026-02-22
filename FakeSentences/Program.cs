@@ -1,8 +1,4 @@
-﻿using FakeSentences.Utilities;
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
+using FakeSentences.Utilities;
 
 namespace FakeSentences
 {
@@ -12,40 +8,40 @@ namespace FakeSentences
         {
             var startingWords = new RootWord("fake");
 
-            var filename = PromptUserForFilename();
-            var fileContents = FileIoUtilities.ReadTextFile(filename);
+            int filesLoaded = 0;
+            foreach (string filename in PromptUserForFilenames())
+            {
+                var fileContents = FileIoUtilities.ReadTextFile(filename);
+                if (!string.IsNullOrEmpty(fileContents))
+                {
+                    startingWords.TrainOnData(startingWords, fileContents);
+                    filesLoaded++;
+                }
+            }
 
-            if (string.IsNullOrEmpty(fileContents))
+            if (filesLoaded == 0)
             {
                 Console.WriteLine("Didn't read any training data. Cannot generate words.");
                 return;
-            }
-            else
-            {
-                // TODO: These might have made good unit tests
-                //startingWords.TrainOnData(startingWords, "'Shan't,' said the cook.");
-                //startingWords.TrainOnData(startingWords, "'Yes, please do!' pleaded Alice");
-
-                startingWords.TrainOnData(startingWords, fileContents);
-                //foreach (KeyValuePair<string, Word> kvp in startingWords.Children)
-                //{
-                //    Console.WriteLine($"Key = {kvp.Key}, Value = {kvp.Value.Count}");
-                //}
             }
 
             Console.WriteLine(startingWords.GenerateSentence(5));
         }
 
         /// <summary>
-        /// Prompts user to enter the [path]name of a text file.
+        /// Prompts user to enter one or more text file paths, one per line.
+        /// An empty line signals the end of input.
         /// </summary>
-        /// <returns>A string which is hopefully the name of a text file.</returns>
-        private static string PromptUserForFilename()
+        /// <returns>Each filename entered by the user.</returns>
+        private static IEnumerable<string> PromptUserForFilenames()
         {
-            Console.WriteLine("Enter name of text file to read");
-            string filename = Console.ReadLine();
-            Console.WriteLine($"You entered '{filename}', attempting read of that file");
-            return filename;
+            Console.WriteLine("Enter training files one per line, then press Enter to start:");
+            string? filename;
+            while (!string.IsNullOrWhiteSpace(filename = Console.ReadLine()))
+            {
+                Console.WriteLine($"  -> '{filename}'");
+                yield return filename;
+            }
         }
     }
 }

@@ -39,8 +39,8 @@ namespace FakeSentences.Tests
             // Added same word twice, so there should only be one child
             Assert.AreEqual(root.Children.Count, 1);
             // That one child should have a count of two
-            Word result;
-            root.Children.TryGetValue("word", out result);
+            root.Children.TryGetValue("word", out Word? result);
+            Assert.IsNotNull(result);
             Assert.AreEqual(result.Count, 2);
             // The children should combine to still being a leaf node
             Assert.IsTrue(result.IsLeaf.Equals(Word.Leaf.IsLeaf));
@@ -63,8 +63,8 @@ namespace FakeSentences.Tests
             // Added same word twice, so there should only be one child
             Assert.AreEqual(root.Children.Count, 1);
             // That one child should have a count of two
-            Word result;
-            root.Children.TryGetValue("word", out result);
+            root.Children.TryGetValue("word", out Word? result);
+            Assert.IsNotNull(result);
             Assert.AreEqual(result.Count, 2);
             // The children should combine to still being a possible leaf node
             Assert.IsTrue(result.IsLeaf.Equals(Word.Leaf.IsMaybeLeaf));
